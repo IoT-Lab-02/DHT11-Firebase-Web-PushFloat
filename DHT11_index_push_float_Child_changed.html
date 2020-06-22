@@ -1,0 +1,45 @@
+<html>
+<!-- Firebase DHT11 push_float() example  -->
+<body>
+     <h4> Weather Monitor using Firebase, NodeMCU
+     <h4 id="temp"> </h4>
+     <h4 id="humi"> </h4>
+
+      <script src="https://www.gstatic.com/firebasejs/6.2.0/firebase-app.js"></script>
+      <script src="https://www.gstatic.com/firebasejs/6.2.0/firebase-auth.js"></script>
+      <script src="https://www.gstatic.com/firebasejs/6.2.0/firebase-database.js"></script>
+      <script>
+        // Your web app's Firebase configuration
+        var firebaseConfig = {
+            apiKey: "AIzaSyAfPWqe7QgFO0HB876_H0bBVuBWUW2tTbo",
+            authDomain: "dht11-push-float-2020-1.firebaseapp.com",
+            databaseURL: "https://dht11-push-float-2020-1.firebaseio.com",
+            projectId: "dht11-push-float-2020-1",
+            storageBucket: "dht11-push-float-2020-1.appspot.com",
+            messagingSenderId: "894754298441",
+            appId: "1:894754298441:web:b5a591d737f3c2d358bd98",
+            measurementId: "G-N1K3TM9MVZ"
+          }
+        // Initialize Firebase
+        firebase.initializeApp(firebaseConfig);
+      </script>
+
+      <script>
+          var dbRefHumi = firebase.database().ref().child('humidity');
+          var dbRefTemp = firebase.database().ref().child('temperature');
+          // var objRef = firebase.database().ref().child('/humidity');
+          dbRefHumi.on("child_added", function(snapshot) {
+              //console.log(snapshot.val());
+              var newHumi = snapshot.val();
+              humi.innerText = "Humidity : " + newHumi + "%";
+              console.log(newHumi);
+          })
+
+          dbRefTemp.on("child_added", function(snapshot) {
+              //console.log(snapshot.val());
+              var newTemp = snapshot.val();
+              temp.innerText = "Temperature : " + newTemp + "℃";
+          })
+      </script>
+</body>
+</html>
